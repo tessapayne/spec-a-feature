@@ -4919,3 +4919,78 @@ File names include document type and team identifier.
 **Related Use Cases:** UC-AI-critique: Request a critique from the critique assistant; UC-AI-consult-project-assistant: Consult the project assistant; UC-CFG-configure-review-criteria: Configure the cross-document review criteria for a course section; UC-VAL-run-validation: Run validation (ReqLint) on the current document; UC-AI-review-proposal: Review and accept or reject an assistant proposal; UC-DOC-edit-document: Edit a section-based requirement document; UC-DOC-edit-use-case: Edit a use case.
 **Assumptions:**
 **Open Issues:**
+
+### **UC-INS-remind-non-submitters: The instructor reminds students who have not submitted**
+
+**Primary Actor:** Instructor
+
+**Trigger:** The instructor wants to identify students who have not submitted a required artifact and send them a reminder.
+
+**Description:** The instructor views students in an assigned course section who have not submitted a required weekly activity report or peer evaluation for the applicable week, selects one or more eligible students, and sends them a reminder to submit the missing artifact.
+
+**Preconditions:**
+- The instructor is authenticated.
+- The instructor is assigned to the course section.
+- The course section and applicable submission period exist.
+
+- **Postconditions:**
+- A reminder is sent only to the selected students who are currently missing the applicable required artifact.
+- Students who have already submitted the applicable artifact are not sent a reminder.
+- No student submission data is modified.
+
+**Main Success Scenario:**
+1. The instructor opens the reminder workflow for an assigned course section.
+2. The system determines which artifact is currently applicable for the selected week: weekly activity report, peer evaluation, or both.
+3. The system checks each student in the section for a current submission of each applicable artifact.
+4. The system displays the students who have not submitted the applicable artifact, identifying which artifact each student is missing.
+5. The instructor selects one or more of the displayed students.
+6. The instructor requests that a reminder be sent.
+7. The system verifies that each selected student is still missing the applicable artifact.
+8. The system sends a reminder only to the students who remain eligible.
+9. The system confirms to the instructor that the reminder was sent.
+
+
+**Extensions:**
+- **2a. No weekly activity report or peer evaluation is currently applicable**
+  - 2a1. The system informs the instructor that there are no applicable submissions requiring reminders and terminates the use case.
+
+- **3a. A student has no team assignment**
+  - 3a1. The system excludes the student from the non-submitter list because the student cannot submit a weekly activity report or peer evaluation until assigned to a team (BR-team-assignment-required).
+
+- **3b. The applicable peer-evaluation week is inactive**
+  - 3b1. The system does not identify students as missing a peer evaluation for that week (BR-active-weeks).
+
+- **3c. The peer-evaluation submission window has closed**
+  - 3c1. The system excludes the closed peer evaluation from reminder eligibility because the submission can no longer be made up (BR-evaluation-submission-window).
+
+- **3d. A student previously submitted the applicable artifact but the current submission no longer exists**
+  - 3d1. The system treats the student as a non-submitter if the student is otherwise eligible to submit the artifact.
+
+- **7a. A selected student submits the applicable artifact before the reminder is sent**
+  - 7a1. The system removes that student from the reminder recipients and does not send the reminder.
+
+- **8a. The instructor has already sent a manual reminder to the student for the same artifact and submission period**
+  - 8a1. The system does not send another manual reminder for that artifact and submission period.
+
+- **8b. The instructor attempts to remind a student outside an assigned course section**
+  - 8b1. The system denies the action in accordance with BR-section-scoped-access and does not disclose the student's submission status.
+ 
+ **Priority:** High
+
+**Frequency of Use:** Weekly during active submission periods.
+
+**Business Rules:** BR-section-scoped-access, BR-team-assignment-required, BR-active-weeks, BR-evaluation-submission-window
+
+**Associated Information:**
+- Reminder eligibility is determined using the student's current submission status for the applicable weekly activity report or peer evaluation.
+- Only students in course sections assigned to the instructor may be viewed or selected.
+- The system rechecks submission status before sending reminders so that students who have since submitted are not reminded.
+- A reminder does not alter the student's submission status or submitted work.
+
+**Related Use Cases:** UC-WAR-submit-war; UC-PE-submit-peer-evaluation
+
+**Assumptions:**
+- Students receive reminders through the notification mechanism supported by Project Pulse.
+- Submission status is current when the instructor initiates the reminder workflow.
+
+**Open Issues:**
