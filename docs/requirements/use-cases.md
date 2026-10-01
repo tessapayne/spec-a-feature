@@ -4922,7 +4922,11 @@ File names include document type and team identifier.
 
 ### **UC-INS-remind-non-submitters: The instructor reminds students who have not submitted**
 
+**UC ID and Name:** UC-INS-remind-non-submitters: Remind students who have not submitted
+**Created By:** Tessa Payne
+**Date Created:** 30/Sep/26
 **Primary Actor:** Instructor
+**Secondary Actors:** Student
 
 **Trigger:** The instructor wants to identify students who have not submitted a required artifact and send them a reminder.
 
@@ -4933,7 +4937,7 @@ File names include document type and team identifier.
 - The instructor is assigned to the course section.
 - The course section and applicable submission period exist.
 
-- **Postconditions:**
+**Postconditions:**
 - A reminder is sent only to the selected students who are currently missing the applicable required artifact.
 - Students who have already submitted the applicable artifact are not sent a reminder.
 - No student submission data is modified.
@@ -4974,8 +4978,8 @@ File names include document type and team identifier.
 
 - **8b. The instructor attempts to remind a student outside an assigned course section**
   - 8b1. The system denies the action in accordance with BR-section-scoped-access and does not disclose the student's submission status.
- 
- **Priority:** High
+
+**Priority:** High
 
 **Frequency of Use:** Weekly during active submission periods.
 
